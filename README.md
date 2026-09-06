@@ -2,145 +2,136 @@
 
 ## Overview
 
-This project combines **financial analytics and Natural Language Processing (NLP)** to analyze firms within the Business Services sector.
+This project analyzes the **Business Services industry** using both financial data and text from company annual reports.
 
-Using historical firm-level financial data and textual data from corporate 10-K filings, the project explores industry trends, financial performance, key business themes, and competitive relationships between firms.
+The goal was to understand industry performance, identify common business themes, and explore competitive relationships between companies.
 
-The analysis progresses from industry-level exploration to a focused competitive analysis of **Microsoft Corporation**, using NLP and word embeddings to identify firms with similar business characteristics.
+The project combines **financial analysis and Natural Language Processing (NLP)** and concludes with a deeper analysis of **Microsoft Corporation and its closest competitors**.
 
-## Project Objectives
+---
 
-The project was designed to:
+## What We Analyzed
 
-- Analyze historical financial performance within the Business Services sector
-- Explore stock prices, sales, geographic distribution, and Return on Assets (ROA)
-- Examine the impact of major events such as the 2008 Financial Crisis
-- Process and analyze textual data from corporate 10-K filings
-- Identify important industry keywords using word counts and TF-IDF
-- Train Word2Vec embeddings to capture relationships between business terminology
-- Create firm-level embeddings from textual features
-- Measure similarity between firms using cosine similarity
-- Identify and visualize competitors of a selected focal firm
-- Combine financial and textual analysis to generate strategic insights
+The project was divided into three main parts:
 
-## Analysis
+1. **Industry & Financial Analysis**
+2. **Company Report & NLP Analysis**
+3. **Microsoft Competitor Analysis**
 
-### 1. Industry & Financial Analysis
+---
 
-The dataset was filtered using SIC codes to isolate firms belonging to the **Business Services sector**.
+## 1. Industry & Financial Analysis
 
-The quantitative analysis explores:
+We first analyzed companies within the **Business Services sector** using historical financial data.
 
-- Number of firms and firm-year observations
-- Firms with complete historical records
-- Highest stock-price firms
-- Highest-sales firms
+The analysis explored:
+
+- Stock price trends
+- Company sales
+- Return on Assets (ROA)
 - Geographic distribution of companies
-- Average stock-price trends over time
+- Historical industry performance
 - Impact of the 2008 Financial Crisis
-- Historical Return on Assets (ROA)
 
-The filtered dataset contained **3,022 unique firms** across **27 fiscal years from 1994–2020**.
+The dataset contained companies across **27 fiscal years from 1994 to 2020**, allowing us to examine how the industry and individual firms performed over time.
 
-### 2. Text Cleaning & NLP
+---
 
-Corporate 10-K text was prepared for analysis using a text-cleaning pipeline that included:
+## 2. 10-K Filing & Text Analysis
 
-- Lowercasing
-- Punctuation removal
-- English stop-word removal
-- Tokenization
+We then analyzed **10-K filings** from companies within the Business Services sector.
 
-This transformed the raw filing text into a cleaner representation suitable for NLP analysis.
+### What is a 10-K?
 
-### 3. Keyword Analysis
+A **10-K is an annual report that publicly traded U.S. companies file with the Securities and Exchange Commission (SEC).**
 
-Two approaches were used to identify important terms within company filings.
+These reports contain detailed information about a company's:
 
-**Word Count**
+- Business and operations
+- Products and services
+- Financial performance
+- Risks
+- Markets
+- Competitive environment
 
-The most frequently occurring words were extracted from each firm's cleaned text.
+Because these reports describe what companies do and how they operate, analyzing their text can help identify **what different companies focus on and how similar their businesses are**.
 
-**TF-IDF**
+### Text Analysis
 
-TF-IDF was used to identify terms that were particularly important to individual firms relative to the wider collection of documents.
+The 10-K text was cleaned and processed using Python and **Natural Language Processing (NLP)**.
 
-The results were also visualized through word clouds to highlight prominent themes across the Business Services sector.
+We used:
 
-### 4. Word Embeddings
+- **Word Frequency Analysis** — identified the most commonly used words across company reports.
+- **TF-IDF** — identified words that were especially important or distinctive to individual companies.
+- **Word Clouds** — visualized prominent themes and terminology across the industry.
+- **Word2Vec** — identified relationships between words that appeared in similar business contexts.
 
-A **Word2Vec model** was trained on the cleaned corporate filing text to capture semantic relationships between words.
+Together, these techniques helped transform large amounts of company text into information that could be used for comparison.
 
-The model was then used to identify terms that appeared in similar contexts.
+---
 
-For example, relationships between industry terms such as:
+## 3. Microsoft Competitor Analysis
 
-- solutions
-- company
-- customer
+For the final part of the project, we selected **Microsoft Corporation** for a deeper competitive analysis.
 
-were explored using cosine similarity between their Word2Vec representations.
+Important keywords from each company's 10-K filing were converted into numerical representations using **Word2Vec**.
 
-### 5. Firm-Level Embeddings
+We then used **cosine similarity** to compare Microsoft with other companies.
 
-Word-count and TF-IDF keywords were combined to construct numerical representations of individual firms.
+### What is Cosine Similarity?
 
-Word2Vec vectors corresponding to each firm's important keywords were averaged to produce a **firm-level embedding**.
+Cosine similarity measures how similar two sets of information are.
 
-These embeddings provide a numerical representation of the language and business themes associated with each company.
+In this project, it allowed us to ask:
 
-### 6. Competitor Similarity Analysis
+> **Based on the language companies use to describe their businesses, which companies are most similar to Microsoft?**
 
-A focal company was selected and compared against other firms using **cosine similarity between firm embeddings**.
+Companies with more similar business language received higher similarity scores.
 
-This enabled the analysis to identify companies whose 10-K filings contained the most similar business language and themes.
+We used these scores to identify Microsoft's closest firms and visualized the results using:
 
-The most similar firms were visualized using:
-
-- Cosine similarity rankings
-- Competitor bar charts
+- Competitor similarity rankings
+- Bar charts
 - Hierarchical clustering
 - Dendrograms
 
-## Microsoft Case Study
+The clustering analysis identified **VMware Inc.** as particularly similar to Microsoft based on the language used in their company filings.
 
-**Microsoft Corporation** was selected for the final firm-level analysis.
+---
 
-The model identified companies with similar textual characteristics based on their corporate filings. Hierarchical clustering was then used to explore relationships among Microsoft and its most similar firms.
+## Financial Comparison
 
-The analysis found **VMware Inc.** to be particularly closely related to Microsoft within the resulting clustering structure.
+After identifying similar companies, we compared Microsoft's financial performance with its competitors and the broader Business Services industry.
 
-Financial measures such as **sales and ROA** were subsequently used to compare Microsoft with competitors and the broader Business Services industry.
+The comparison focused on:
 
-## Methodology
+- **Sales**
+- **Return on Assets (ROA)**
+
+This allowed us to combine the results of the text analysis with traditional financial metrics to develop a broader view of Microsoft's competitive position.
+
+---
+
+## Project Workflow
 
 ```text
-Financial Data
-      │
-      ├── SIC Sector Filtering
-      │
-      ├── Financial Analysis
-      │     ├── Stock Prices
-      │     ├── Sales
-      │     └── ROA
-      │
-10-K Filing Data
-      │
-      ├── Text Cleaning
-      │
-      ├── Keyword Extraction
-      │     ├── Word Count
-      │     └── TF-IDF
-      │
-      ├── Word2Vec
-      │
-      └── Firm Embeddings
-                │
-                ↓
-        Cosine Similarity
-                │
-                ↓
-       Competitor Analysis
-                │
-                ↓
-      Hierarchical Clustering
+Business Services Data
+        ↓
+Financial Analysis
+        ↓
+Stock Prices • Sales • ROA • Industry Trends
+
+10-K Company Reports
+        ↓
+Text Cleaning
+        ↓
+Word Frequency + TF-IDF
+        ↓
+Word2Vec
+        ↓
+Company Similarity Analysis
+        ↓
+Microsoft Competitor Analysis
+        ↓
+Financial Comparison
